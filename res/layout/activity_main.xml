@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.codonomics.simpledutchcalculator.MainActivity" >
+
+    <TextView
+        android:id="@+id/txtBillAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/billAmount"
+        android:layout_alignTop="@+id/billAmount"
+        android:gravity="center_vertical"
+        android:text="@string/bill_amount"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/billAmount"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/txtBillAmount"
+        android:inputType="number" />
+
+    <Space
+        android:id="@+id/space1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/billAmount" />
+
+    
+    <TextView
+        android:id="@+id/txtTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space1"
+        android:layout_alignParentStart="true"
+        android:text="@string/tip_percent"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtTipPercentageChosen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space1"
+        android:layout_toEndOf="@+id/txtTip"
+        android:layout_alignTop="@+id/txtTip"
+        android:layout_alignBottom="@+id/txtTip"
+        android:text="@string/zero_percent"
+        android:paddingEnd="5dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <SeekBar
+        android:id="@+id/tipPercentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtTip"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/txtTip"
+        android:layout_below="@+id/space1"
+        android:layout_toEndOf="@+id/txtTipPercentageChosen"
+        android:max="25"
+        android:progress="1" />
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tipPercentage" />
+
+    
+    <TextView
+        android:id="@+id/txtTotalBillAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tipPercentage"
+        android:layout_alignBottom="@+id/totalBillAmount"
+        android:layout_alignTop="@+id/totalBillAmount"
+        android:gravity="center_vertical"
+        android:text="@string/total_bill_amount"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/totalBillAmount"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/txtTotalBillAmount"
+        android:layout_below="@+id/space2"
+        android:inputType="number" />
+    
+    <Space
+        android:id="@+id/space3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tipPercentage" />
+    
+    
+        
+</RelativeLayout>
