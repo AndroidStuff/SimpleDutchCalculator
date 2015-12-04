@@ -38,6 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/space1"
         android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/tipPercentage"
+        android:layout_alignBottom="@+id/tipPercentage"
+        android:gravity="center_vertical"
         android:text="@string/tip_percent"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -47,8 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/space1"
         android:layout_toEndOf="@+id/txtTip"
-        android:layout_alignTop="@+id/txtTip"
-        android:layout_alignBottom="@+id/txtTip"
+        android:layout_alignTop="@+id/tipPercentage"
+        android:layout_alignBottom="@+id/tipPercentage"
+        android:gravity="center_vertical"
         android:text="@string/zero_percent"
         android:paddingEnd="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -57,9 +61,7 @@
         android:id="@+id/tipPercentage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txtTip"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/txtTip"
         android:layout_below="@+id/space1"
         android:layout_toEndOf="@+id/txtTipPercentageChosen"
         android:max="25"
