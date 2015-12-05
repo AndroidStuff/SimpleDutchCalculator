@@ -14,13 +14,9 @@ public class SimpleDutchCalculatorActivity extends Activity {
 
 	private static final String BILL_AMOUNT = "bill_amount";
 	private static final String TIP_AMOUNT = "tip_amount";
-	private static final String TOTAL_BILL_AMOUNT = "total_bill_amount";
-	private int billAmount;
-	private int tipPercent;
-	private int totalBillAmount;
+	private SimpleDutchCalculator data = new SimpleDutchCalculator(0,0);
 
 	private OnSeekBarChangeListener tipSelectorListener = new OnSeekBarChangeListener() {
-
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {  }
 
@@ -29,18 +25,18 @@ public class SimpleDutchCalculatorActivity extends Activity {
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			tipPercent = seekBar.getProgress();
+			data = new SimpleDutchCalculator( data.getBillAmount(), seekBar.getProgress() );
 			updateTipPercent();
 			updateTotalBillAmount();
 		}
 	};
 
 	private TextWatcher billAmountWatcher = new TextWatcher() {
-
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			try {
-				billAmount = Integer.parseInt(s.toString());
+				int billAmount = Integer.parseInt(s.toString());
+				data = new SimpleDutchCalculator( billAmount,  data.getTipPercent());
 				updateTotalBillAmount();
 			} catch (NumberFormatException e) {
 				updateBillAmount();
@@ -69,37 +65,10 @@ public class SimpleDutchCalculatorActivity extends Activity {
 		initialize(savedInstanceState);
 	}
 
-	private void initUIReferences() {
-		uiTipPercentageChosen = (TextView) findViewById(R.id.txtTipPercentageChosen);
-		uiTipValueSelector = (SeekBar) findViewById(R.id.tipPercentageSelector);
-		uiBillAmount = (EditText) findViewById(R.id.billAmount);
-		uiTotalBillValue = (EditText) findViewById(R.id.totalBillAmount);
-	}
-
-	private void updateBillAmount() {
-		uiBillAmount.setText(billAmount + "");
-	}
-
-	private void updateTotalBillAmount() {
-		totalBillAmount = billAmount + (billAmount * tipPercent / 100);
-		uiTotalBillValue.setText(totalBillAmount + "");
-	}
-
-	private void updateTipPercent() {
-		uiTipPercentageChosen.setText(tipPercent + "");
-	}
-
-	private void updateUI() {
-		updateBillAmount();
-		updateTipPercent();
-		updateTotalBillAmount();
-	}
-
 	private void initialize(Bundle savedInstanceState) {
 		initUIReferences();
 		if(savedInstanceState == null) {
 			Log.i(APP_OPS_SERVICE, "App just started..");
-			initializeState();
 			uiTipValueSelector.setOnSeekBarChangeListener(tipSelectorListener);
 			uiBillAmount.addTextChangedListener(billAmountWatcher);
 			updateUI();
@@ -109,16 +78,34 @@ public class SimpleDutchCalculatorActivity extends Activity {
 		}
 	}
 
-	private void restoreState(Bundle bundle) {
-		billAmount = bundle.getInt(BILL_AMOUNT);
-		tipPercent = bundle.getInt(TIP_AMOUNT);
-		totalBillAmount = bundle.getInt(TOTAL_BILL_AMOUNT);
+	private void initUIReferences() {
+		uiTipPercentageChosen = (TextView) findViewById(R.id.txtTipPercentageChosen);
+		uiTipValueSelector = (SeekBar) findViewById(R.id.tipPercentageSelector);
+		uiBillAmount = (EditText) findViewById(R.id.billAmount);
+		uiTotalBillValue = (EditText) findViewById(R.id.totalBillAmount);
 	}
 
-	private void initializeState() {
-		billAmount = 0;
-		tipPercent = 0;
-		totalBillAmount = 0;
+	private void updateUI() {
+		updateBillAmount();
+		updateTipPercent();
+		updateTotalBillAmount();
+	}
+
+	private void restoreState(Bundle bundle) {
+		data = new SimpleDutchCalculator( bundle.getInt(BILL_AMOUNT), bundle.getInt(TIP_AMOUNT) );
+	}
+
+	private void updateBillAmount() {
+		uiBillAmount.setText("" +
+				data.getBillAmount());
+	}
+
+	private void updateTotalBillAmount() {
+		uiTotalBillValue.setText("" + data.totalBillAmount());
+	}
+
+	private void updateTipPercent() {
+		uiTipPercentageChosen.setText("" + data.getTipPercent());
 	}
 
 }
