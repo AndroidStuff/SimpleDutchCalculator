@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/space1"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/tipPercentage"
-        android:layout_alignBottom="@+id/tipPercentage"
+        android:layout_alignTop="@+id/tipPercentageSelector"
+        android:layout_alignBottom="@+id/tipPercentageSelector"
         android:gravity="center_vertical"
         android:text="@string/tip_percent"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -50,15 +50,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/space1"
         android:layout_toEndOf="@+id/txtTip"
-        android:layout_alignTop="@+id/tipPercentage"
-        android:layout_alignBottom="@+id/tipPercentage"
+        android:layout_alignTop="@+id/tipPercentageSelector"
+        android:layout_alignBottom="@+id/tipPercentageSelector"
         android:gravity="center_vertical"
         android:text="@string/zero_percent"
         android:paddingEnd="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <SeekBar
-        android:id="@+id/tipPercentage"
+        android:id="@+id/tipPercentageSelector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -71,14 +71,14 @@
         android:id="@+id/space2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/tipPercentage" />
+        android:layout_below="@+id/tipPercentageSelector" />
 
     
     <TextView
         android:id="@+id/txtTotalBillAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tipPercentage"
+        android:layout_below="@+id/tipPercentageSelector"
         android:layout_alignBottom="@+id/totalBillAmount"
         android:layout_alignTop="@+id/totalBillAmount"
         android:gravity="center_vertical"
@@ -97,7 +97,7 @@
         android:id="@+id/space3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/tipPercentage" />
+        android:layout_below="@+id/tipPercentageSelector" />
     
     
         
