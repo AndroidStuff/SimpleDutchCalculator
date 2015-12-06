@@ -55,7 +55,7 @@
         android:gravity="center_vertical"
         android:text="@string/zero_percent"
         android:paddingEnd="5dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <SeekBar
         android:id="@+id/tipPercentageSelector"
@@ -83,7 +83,7 @@
         android:layout_alignTop="@+id/totalBillAmount"
         android:gravity="center_vertical"
         android:text="@string/total_bill_amount"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/totalBillAmount"
@@ -96,9 +96,52 @@
     <Space
         android:id="@+id/space3"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="45dp"
         android:layout_below="@+id/tipPercentageSelector" />
     
     
-        
+     <TextView
+        android:id="@+id/txtNumberOfPersons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space3"
+        android:layout_alignBottom="@+id/numberOfPersons"
+        android:layout_alignTop="@+id/numberOfPersons"
+        android:gravity="center_vertical"
+        android:text="@string/headcount"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/numberOfPersons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/txtNumberOfPersons"
+        android:layout_below="@+id/space3"
+        android:inputType="number" />
+
+    <Space
+        android:id="@+id/space4"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/numberOfPersons" />
+
+
+    <TextView
+        android:id="@+id/txtCostPerPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space4"
+        android:layout_alignBottom="@+id/costPerPerson"
+        android:layout_alignTop="@+id/costPerPerson"
+        android:gravity="center_vertical"
+        android:text="@string/costPerPerson"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/costPerPerson"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/txtCostPerPerson"
+        android:layout_below="@+id/space4"
+        android:inputType="number" />
 </RelativeLayout>

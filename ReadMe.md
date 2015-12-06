@@ -1,7 +1,10 @@
 # Simple Dutch Calculator
 
-## Tasks
+## User Stories
 * For a given Bill amount and Tip percentage, Compute Total
+    - Develop UI Layout
+    - Finish coding to reflect Tip% on SeekBar progress
+    - Finish coding to reflect TotalBillAmount on text change in BillAmount
 * Add entry for number of people and compute amount per person
 
 ## Features
