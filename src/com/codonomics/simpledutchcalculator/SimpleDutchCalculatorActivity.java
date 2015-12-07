@@ -15,24 +15,21 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	private static final String BILL_AMOUNT = "bill_amount";
 	private static final String TIP_PERCENT = "tip_percent";
 	private static final String HEAD_COUNT = "head_count";
-	private SimpleDutchCalculator data;
+
+	private int billAmount;
+	private int tipPercent;
+	private int headcount;
 
 	private OnSeekBarChangeListener tipSelectorListener = new OnSeekBarChangeListener() {
 		@Override
-		public void onStopTrackingTouch(SeekBar seekBar) {
-		}
+		public void onStopTrackingTouch(SeekBar seekBar) { }
 
 		@Override
-		public void onStartTrackingTouch(SeekBar seekBar) {
-		}
+		public void onStartTrackingTouch(SeekBar seekBar) { }
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			// data = new SimpleDutchCalculator( data.getBillAmount(), ,
-			// data.getHeadcount() );
-			data.setTipPercent(seekBar.getProgress()); // Making object MUTABLE
-			// to prevent
-			// OutOfMemoryError
+			tipPercent = seekBar.getProgress();
 			updateTipPercent();
 			updateTotalBillAmount();
 			updateCostPerHead();
@@ -51,16 +48,14 @@ public class SimpleDutchCalculatorActivity extends Activity {
 
 		private void uiBillAmount_onTextChanged(CharSequence s, int start, int before, int count) {
 			try {
-				int billAmount = Integer.parseInt(s.toString());
-				data.setBillAmount(billAmount);
+				billAmount = Integer.parseInt(s.toString());
 				updateTotalBillAmount();
 			} catch (NumberFormatException e) {}
 		}
 
 		private void uiHeadcount_onTextChanged(CharSequence s, int start, int before, int count) {
 			try {
-				int headCount = Integer.parseInt(s.toString());
-				data.setHeadcount(headCount);
+				headcount = Integer.parseInt(s.toString());
 				updateCostPerHead();
 			} catch (NumberFormatException e) {}
 		}
@@ -84,10 +79,9 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		outState.putInt(BILL_AMOUNT, data.getBillAmount());
-		outState.putInt(TIP_PERCENT, data.getTipPercent());
-		outState.putInt(HEAD_COUNT, data.getHeadcount());
-		data = null;
+		outState.putInt(BILL_AMOUNT, billAmount);
+		outState.putInt(TIP_PERCENT, tipPercent);
+		outState.putInt(HEAD_COUNT, headcount);
 	}
 
 	private void initialize(Bundle savedInstanceState) {
@@ -96,8 +90,8 @@ public class SimpleDutchCalculatorActivity extends Activity {
 			uiTipValueSelector().setOnSeekBarChangeListener(tipSelectorListener);
 			uiBillAmount().addTextChangedListener(textWatcher);
 			uiHeadcount().addTextChangedListener(textWatcher);
-			data = new SimpleDutchCalculator(0, 0, 1);
-			updateUI();
+			initState(0, 0, 1);
+			//updateUI();
 		} else {
 			Log.i(APP_OPS_SERVICE, "App restored from memory..");
 			restoreState(savedInstanceState);
@@ -137,25 +131,37 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	}
 
 	private void restoreState(Bundle bundle) {
-		data = new SimpleDutchCalculator(bundle.getInt(BILL_AMOUNT), bundle.getInt(TIP_PERCENT),
-				bundle.getInt(HEAD_COUNT));
+		initState(bundle.getInt(BILL_AMOUNT), bundle.getInt(TIP_PERCENT), bundle.getInt(HEAD_COUNT));
 	}
 
 	private void updateBillAmount() {
-		uiBillAmount().setText(Integer.toString(data.getBillAmount()));
+		uiBillAmount().setText(Integer.toString(billAmount));
 	}
 
 	private void updateTotalBillAmount() {
-		uiTotalBillValue().setText(Integer.toString(data.totalBillAmount()));
+		uiTotalBillValue().setText(Integer.toString(totalBillAmount()));
 	}
 
 	private void updateCostPerHead() {
-		uiHeadcount().setText(Integer.toString(data.getHeadcount())); //TODO: OOM Error vanishes if you comment this line
-		uiCostPerHead().setText(Integer.toString(data.costPerHead()));
+		uiHeadcount().setText(Integer.toString(headcount)); //TODO: OOM Error vanishes if you comment this line
+		uiCostPerHead().setText(Integer.toString(costPerHead()));
 	}
 
 	private void updateTipPercent() {
-		uiTipPercentageChosen().setText(Integer.toString(data.getTipPercent()));
+		uiTipPercentageChosen().setText(Integer.toString(tipPercent));
 	}
 
+	public void initState(int billAmount, int tipPercent, int headcount) {
+		this.billAmount = billAmount;
+		this.tipPercent = tipPercent;
+		this.headcount = headcount;
+	}
+
+	public int totalBillAmount() {
+		return billAmount + (billAmount * tipPercent / 100);
+	}
+
+	public int costPerHead() {
+		return totalBillAmount() / headcount;
+	}
 }
