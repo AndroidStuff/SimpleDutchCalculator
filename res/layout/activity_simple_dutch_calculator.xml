@@ -10,6 +10,7 @@
 
     <TextView
         android:id="@+id/txtBillAmount"
+        android:labelFor="@+id/billAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/billAmount"
@@ -19,7 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/billAmount"
+        android:id="@id/billAmount"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/txtBillAmount"
@@ -34,6 +35,7 @@
     
     <TextView
         android:id="@+id/txtTip"
+        android:labelFor="@+id/txtTipPercentageChosen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/space1"
@@ -45,7 +47,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/txtTipPercentageChosen"
+        android:id="@id/txtTipPercentageChosen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/space1"
@@ -76,6 +78,7 @@
     
     <TextView
         android:id="@+id/txtTotalBillAmount"
+        android:labelFor="@+id/totalBillAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tipPercentageSelector"
@@ -86,7 +89,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/totalBillAmount"
+        android:id="@id/totalBillAmount"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/txtTotalBillAmount"
@@ -99,20 +102,20 @@
         android:layout_height="45dp"
         android:layout_below="@+id/tipPercentageSelector" />
     
-    
      <TextView
-        android:id="@+id/txtNumberOfPersons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/space3"
-        android:layout_alignBottom="@+id/numberOfPersons"
-        android:layout_alignTop="@+id/numberOfPersons"
-        android:gravity="center_vertical"
-        android:text="@string/headcount"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+         android:id="@+id/txtNumberOfPersons"
+         android:labelFor="@+id/numberOfPersons"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/numberOfPersons"
+         android:layout_alignTop="@+id/numberOfPersons"
+         android:layout_below="@+id/space3"
+         android:gravity="center_vertical"
+         android:text="@string/headcount"
+         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/numberOfPersons"
+        android:id="@id/numberOfPersons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/txtNumberOfPersons"
@@ -128,6 +131,7 @@
 
     <TextView
         android:id="@+id/txtCostPerPerson"
+        android:labelFor="@+id/costPerPerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/space4"
@@ -138,7 +142,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/costPerPerson"
+        android:id="@id/costPerPerson"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/txtCostPerPerson"
