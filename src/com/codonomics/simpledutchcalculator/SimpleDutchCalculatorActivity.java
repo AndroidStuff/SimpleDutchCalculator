@@ -15,75 +15,62 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	private static final String BILL_AMOUNT = "bill_amount";
 	private static final String TIP_PERCENT = "tip_percent";
 	private static final String HEAD_COUNT = "head_count";
-	private SimpleDutchCalculator data = new SimpleDutchCalculator(0,0,1);
+	private SimpleDutchCalculator data;
 
 	private OnSeekBarChangeListener tipSelectorListener = new OnSeekBarChangeListener() {
 		@Override
-		public void onStopTrackingTouch(SeekBar seekBar) {  }
+		public void onStopTrackingTouch(SeekBar seekBar) {
+		}
 
 		@Override
-		public void onStartTrackingTouch(SeekBar seekBar) { }
+		public void onStartTrackingTouch(SeekBar seekBar) {
+		}
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			//data = new SimpleDutchCalculator( data.getBillAmount(), , data.getHeadcount() );
-			data.setTipPercent(seekBar.getProgress()); //Making object MUTABLE to prevent OutOfMemoryError
+			// data = new SimpleDutchCalculator( data.getBillAmount(), ,
+			// data.getHeadcount() );
+			data.setTipPercent(seekBar.getProgress()); // Making object MUTABLE
+			// to prevent
+			// OutOfMemoryError
 			updateTipPercent();
 			updateTotalBillAmount();
 			updateCostPerHead();
 		}
 	};
 
-	private TextWatcher billAmountWatcher = new TextWatcher() {
+	private TextWatcher textWatcher = new TextWatcher() {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			if (uiBillAmount().getText().hashCode() == s.hashCode()) {
+				uiBillAmount_onTextChanged(s, start, before, count);
+			} else if (uiHeadcount().getText().hashCode() == s.hashCode()) {
+				uiHeadcount_onTextChanged(s, start, before, count);
+			}
+		}
+
+		private void uiBillAmount_onTextChanged(CharSequence s, int start, int before, int count) {
 			try {
 				int billAmount = Integer.parseInt(s.toString());
-				//data = new SimpleDutchCalculator( billAmount,  data.getTipPercent(), data.getHeadcount() );
-				data.setBillAmount(billAmount); //Making object MUTABLE to prevent OutOfMemoryError
+				data.setBillAmount(billAmount);
 				updateTotalBillAmount();
-			} catch (NumberFormatException e) {
-				//				updateBillAmount();
-			}
+			} catch (NumberFormatException e) {}
 		}
 
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-		}
-	};
-
-	private TextWatcher headCountWatcher = new TextWatcher() {
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		private void uiHeadcount_onTextChanged(CharSequence s, int start, int before, int count) {
 			try {
 				int headCount = Integer.parseInt(s.toString());
-				//data = new SimpleDutchCalculator( data.getBillAmount(),  data.getTipPercent(), headCount );
-				data.setHeadcount(headCount); //Making object MUTABLE to prevent OutOfMemoryError
+				data.setHeadcount(headCount);
 				updateCostPerHead();
-			} catch (NumberFormatException e) {
-				//				updateCostPerHead();
-			}
+			} catch (NumberFormatException e) {}
 		}
 
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-		}
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
 		@Override
-		public void afterTextChanged(Editable s) {
-		}
+		public void afterTextChanged(Editable editable) { }
 	};
-
-	private EditText uiTotalBillValue;
-	private EditText uiBillAmount;
-	private TextView uiTipPercentageChosen;
-	private SeekBar uiTipValueSelector;
-	private EditText uiHeadcount;
-	private EditText uiCostPerHead;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +87,16 @@ public class SimpleDutchCalculatorActivity extends Activity {
 		outState.putInt(BILL_AMOUNT, data.getBillAmount());
 		outState.putInt(TIP_PERCENT, data.getTipPercent());
 		outState.putInt(HEAD_COUNT, data.getHeadcount());
+		data = null;
 	}
 
 	private void initialize(Bundle savedInstanceState) {
-		initUIReferences();
-		if(savedInstanceState == null) {
+		if (savedInstanceState == null) {
 			Log.i(APP_OPS_SERVICE, "App just started..");
-			uiTipValueSelector.setOnSeekBarChangeListener(tipSelectorListener);
-			uiBillAmount.addTextChangedListener(billAmountWatcher);
-			uiHeadcount.addTextChangedListener(headCountWatcher);
+			uiTipValueSelector().setOnSeekBarChangeListener(tipSelectorListener);
+			uiBillAmount().addTextChangedListener(textWatcher);
+			uiHeadcount().addTextChangedListener(textWatcher);
+			data = new SimpleDutchCalculator(0, 0, 1);
 			updateUI();
 		} else {
 			Log.i(APP_OPS_SERVICE, "App restored from memory..");
@@ -117,13 +105,28 @@ public class SimpleDutchCalculatorActivity extends Activity {
 		}
 	}
 
-	private void initUIReferences() {
-		uiTipPercentageChosen = (TextView) findViewById(R.id.txtTipPercentageChosen);
-		uiTipValueSelector = (SeekBar) findViewById(R.id.tipPercentageSelector);
-		uiBillAmount = (EditText) findViewById(R.id.billAmount);
-		uiTotalBillValue = (EditText) findViewById(R.id.totalBillAmount);
-		uiHeadcount = (EditText) findViewById(R.id.numberOfPersons);
-		uiCostPerHead = (EditText) findViewById(R.id.costPerPerson);
+	private TextView uiTipPercentageChosen() {
+		return (TextView) findViewById(R.id.txtTipPercentageChosen);
+	}
+
+	private SeekBar uiTipValueSelector() {
+		return (SeekBar) findViewById(R.id.tipPercentageSelector);
+	}
+
+	private EditText uiBillAmount() {
+		return (EditText) findViewById(R.id.billAmount);
+	}
+
+	private EditText uiHeadcount() {
+		return (EditText) findViewById(R.id.numberOfPersons);
+	}
+
+	private EditText uiTotalBillValue() {
+		return (EditText) findViewById(R.id.totalBillAmount);
+	}
+
+	private EditText uiCostPerHead() {
+		return (EditText) findViewById(R.id.costPerPerson);
 	}
 
 	private void updateUI() {
@@ -134,29 +137,25 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	}
 
 	private void restoreState(Bundle bundle) {
-		//data = new SimpleDutchCalculator( bundle.getInt(BILL_AMOUNT), bundle.getInt(TIP_AMOUNT), data.getHeadcount() );
-		data.setBillAmount(bundle.getInt(BILL_AMOUNT)); //Making object MUTABLE to prevent OutOfMemoryError
-		data.setTipPercent(bundle.getInt(TIP_PERCENT)); //Making object MUTABLE to prevent OutOfMemoryError
-		data.setHeadcount(bundle.getInt(HEAD_COUNT)); //Making object MUTABLE to prevent OutOfMemoryError
+		data = new SimpleDutchCalculator(bundle.getInt(BILL_AMOUNT), bundle.getInt(TIP_PERCENT),
+				bundle.getInt(HEAD_COUNT));
 	}
 
 	private void updateBillAmount() {
-		uiBillAmount.setText("" +
-				data.getBillAmount());
+		uiBillAmount().setText(Integer.toString(data.getBillAmount()));
 	}
 
 	private void updateTotalBillAmount() {
-		uiTotalBillValue.setText("" + data.totalBillAmount());
+		uiTotalBillValue().setText(Integer.toString(data.totalBillAmount()));
 	}
 
 	private void updateCostPerHead() {
-		uiHeadcount.setText("" + data.getHeadcount());
-		uiCostPerHead.setText("" + data.costPerHead());
-		Log.i("Cost Per Head", data.costPerHead() + "");
+		uiHeadcount().setText(Integer.toString(data.getHeadcount())); //TODO: OOM Error vanishes if you comment this line
+		uiCostPerHead().setText(Integer.toString(data.costPerHead()));
 	}
 
 	private void updateTipPercent() {
-		uiTipPercentageChosen.setText("" + data.getTipPercent());
+		uiTipPercentageChosen().setText(Integer.toString(data.getTipPercent()));
 	}
 
 }
