@@ -7,6 +7,8 @@
     <string name="total_bill_amount">Total Bill Amount</string>
     <string name="action_settings">Settings</string>
     <string name="zero_percent">0</string>
+    <string name="zero">0</string>
+    <string name="one">1</string>
     <string name="headcount">Headcount</string>
     <string name="costPerPerson">Cost per Head</string>
 
