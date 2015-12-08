@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -16,9 +15,9 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	private static final String TIP_PERCENT = "tip_percent";
 	private static final String HEAD_COUNT = "head_count";
 
-	private int billAmount;
-	private int tipPercent;
-	private int headcount;
+	private int billAmount=0;
+	private int tipPercent=0;
+	private int headcount=1;
 
 	private OnSeekBarChangeListener tipSelectorListener = new OnSeekBarChangeListener() {
 		@Override
@@ -76,6 +75,12 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		//updateUI();
+	}
+
+	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
@@ -86,17 +91,13 @@ public class SimpleDutchCalculatorActivity extends Activity {
 
 	private void initialize(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
-			Log.i(APP_OPS_SERVICE, "App just started..");
 			uiTipValueSelector().setOnSeekBarChangeListener(tipSelectorListener);
 			uiBillAmount().addTextChangedListener(textWatcher);
 			uiHeadcount().addTextChangedListener(textWatcher);
-			initState(0, 0, 1);
-			//updateUI();
-		} else {
-			Log.i(APP_OPS_SERVICE, "App restored from memory..");
-			restoreState(savedInstanceState);
-			updateUI();
+			reset(0, 0, 1);
+			return;
 		}
+		restoreState(savedInstanceState);
 	}
 
 	private TextView uiTipPercentageChosen() {
@@ -131,7 +132,7 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	}
 
 	private void restoreState(Bundle bundle) {
-		initState(bundle.getInt(BILL_AMOUNT), bundle.getInt(TIP_PERCENT), bundle.getInt(HEAD_COUNT));
+		reset(bundle.getInt(BILL_AMOUNT), bundle.getInt(TIP_PERCENT), bundle.getInt(HEAD_COUNT));
 	}
 
 	private void updateBillAmount() {
@@ -143,7 +144,6 @@ public class SimpleDutchCalculatorActivity extends Activity {
 	}
 
 	private void updateCostPerHead() {
-		uiHeadcount().setText(Integer.toString(headcount)); //TODO: OOM Error vanishes if you comment this line
 		uiCostPerHead().setText(Integer.toString(costPerHead()));
 	}
 
@@ -151,7 +151,7 @@ public class SimpleDutchCalculatorActivity extends Activity {
 		uiTipPercentageChosen().setText(Integer.toString(tipPercent));
 	}
 
-	public void initState(int billAmount, int tipPercent, int headcount) {
+	public void reset(int billAmount, int tipPercent, int headcount) {
 		this.billAmount = billAmount;
 		this.tipPercent = tipPercent;
 		this.headcount = headcount;
